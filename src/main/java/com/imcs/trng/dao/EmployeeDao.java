@@ -6,11 +6,17 @@
 package com.imcs.trng.dao;
 
 import com.imcs.trng.models.Employee;
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author Avishek
  */
-public interface EmployeeDao {
+@Entity
+@NamedQuery(name = "Employee", query = "from employee e where e.empno=?")
+public interface EmployeeDao extends CrudRepository<Employee, Integer>{
     public Employee getEmployeeById(int empNo);
 }

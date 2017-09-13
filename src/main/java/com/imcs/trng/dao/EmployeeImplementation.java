@@ -10,6 +10,9 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,39 +22,72 @@ import org.springframework.stereotype.Repository;
  *
  * @author Avishek
  */
-@Repository
-public class EmployeeImplementation {
+
+public class EmployeeImplementation implements EmployeeDao{
+
+    @PersistenceContext EntityManager em;
     
-    @Autowired
-    DataSource dataSource;
-    
-    public Employee getEmployeeById(int empId){
-        String query = "{call employeewebapp.getEmployeeById(?);}";
-        Connection con;
-        CallableStatement cs;
-        ResultSet rs;
-        Employee emp;
-        
-        try{
-            emp = new Employee();
-            con = dataSource.getConnection();
-            cs = con.prepareCall(query);
-            cs.setInt(1, empId);
-            rs = cs.executeQuery();
-            
-            while(rs.next()){
-                emp.setEmpno(rs.getInt("empno"));
-                emp.setDeptno(rs.getInt("empdept"));
-                emp.setName(rs.getString("empname"));
-                emp.setContact(rs.getInt("contact"));
-                emp.setUsername(rs.getString("username"));
-                emp.setPassword("");
-            }
-            
-            return emp;
-        }catch(SQLException ex){
-            ex.printStackTrace();
-        }
-        return null;
+    @Override
+    public Employee getEmployeeById(int empNo) {
+        CriteriaQuery<Employee> query = em.getCriteriaBuilder().createQuery(Employee.class);
+        query.select(query.from(Employee.class));
+
+        return (Employee) em.createQuery(query).getResultList();
     }
+
+    @Override
+    public <S extends Employee> S save(S s) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public <S extends Employee> Iterable<S> save(Iterable<S> itrbl) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Employee findOne(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean exists(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Iterable<Employee> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Iterable<Employee> findAll(Iterable<Integer> itrbl) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public long count() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(Employee t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(Iterable<? extends Employee> itrbl) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

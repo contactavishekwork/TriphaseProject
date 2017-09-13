@@ -5,12 +5,18 @@
  */
 package com.imcs.trng.dao;
 
+import com.imcs.trng.models.Employee;
 import com.imcs.trng.models.Login;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author Avishek
  */
-public interface LoginDao {
-    public Login getLogin(String username);
+@Entity
+@NamedQuery(name = "Employee", query = "from employee e where e.empno=?")
+public interface LoginDao extends CrudRepository<Employee, Integer>{
+    public Login findByUsername(String username);
 }

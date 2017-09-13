@@ -5,16 +5,42 @@
  */
 package com.imcs.trng.models;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author Avishek
  */
-public class Employee {
+@Entity
+@Table(name = "employees")
+public class Employee implements Serializable {
+    
+    private static final long SERIAL_VERSION = 1L;
+    
+    @Id
+    @GeneratedValue
+    @Column(name = "empno")
     private int empno;
+    @Column(name = "deptno")
     private int deptno;
+    
+    @Size(min=1, max=45)
+    @Column(name = "empname")
     private String name;
+    
+    @Column(name="contact")
     private int contact;
+    
+    @Column(name="username")
     private String username;
+    
+    @Column(name="password")
     private String password;
 
     /**

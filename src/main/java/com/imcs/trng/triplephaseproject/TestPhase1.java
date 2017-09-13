@@ -11,8 +11,8 @@ package com.imcs.trng.triplephaseproject;
  */
 public class TestPhase1 {
     public static void main(String[] args) {
-        new com.imcs.trng.dao.DepartmentImplementation().getDepartmentById(1).toString();
+        new com.imcs.trng.dao.DepartmentImplementation().getDeptById(1).toString();
         new com.imcs.trng.dao.EmployeeImplementation().getEmployeeById(1).toString();
-        new com.imcs.trng.dao.LoginImplementation().getLogin("avishek").toString();
+        new com.imcs.trng.dao.LoginDaoImpl().findByUsername("avishek").toString();
     }    
 }

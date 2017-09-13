@@ -10,6 +10,9 @@ import com.mysql.jdbc.CallableStatement;
 import com.mysql.jdbc.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,35 +21,70 @@ import org.springframework.stereotype.Repository;
  *
  * @author Avishek
  */
-@Repository
-public class DepartmentImplementation {
-    
-    @Autowired
-    DataSource dataSource;
-    
-    public Department getDepartmentById(int deptId){
-        String query = "{call employeewebapp.getDeptInfoById(?);}";
-        Connection con;
-        CallableStatement cs;
-        ResultSet rs;
-        Department dept;
-        
-        try{
-            dept = new Department();
-            con = (Connection) dataSource.getConnection();
-            cs = (CallableStatement) con.prepareCall(query);
-            cs.setInt(1, deptId);
-            rs = cs.executeQuery();
-            
-            while(rs.next()){
-                dept.setDeptNo(rs.getInt("deptid"));
-                dept.setDeptName(rs.getString("deptname"));
-                dept.setDeptLocation(rs.getString("deptlocation"));
-            }
-            return dept;
-        }catch(SQLException ex){
-            ex.printStackTrace();
-        }
-        return null;
+public class DepartmentImplementation implements DepartmentDao {
+
+    @PersistenceContext EntityManager em;
+    @Override
+    public Department getDeptById(int deptId) {
+        CriteriaQuery<Department> query = em.getCriteriaBuilder().createQuery(Department.class);
+        query.select(query.from(Department.class));
+
+        return (Department) em.createQuery(query).getResultList();
     }
+
+    @Override
+    public <S extends Department> S save(S s) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public <S extends Department> Iterable<S> save(Iterable<S> itrbl) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Department findOne(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean exists(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Iterable<Department> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Iterable<Department> findAll(Iterable<Integer> itrbl) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public long count() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(Department t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(Iterable<? extends Department> itrbl) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

@@ -5,12 +5,29 @@
  */
 package com.imcs.trng.models;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  *
  * @author Avishek
  */
-public class Login {
+@Entity
+@Table(name="employees")
+public class Login implements Serializable{
+    
+    private static final long SERIAL_VERSION = 1L;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "username")
     private String username;
+    @Column(name = "password")
     private String password;
 
     /**
