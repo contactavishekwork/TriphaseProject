@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author Avishek
  */
-
+@Deprecated
 public class LoginImplementation {
 //
 ////    @Autowired
